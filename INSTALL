@@ -1,0 +1,42 @@
+You would want have all your extra elisp stuff in a common place,
+e.g. ~/.emacs.d/lisp/. 
+
+The files da-kalendar.el and da-cal-tex.el should either be copied to
+~/.emacs.d/lisp or you could clone the git repository and softlink the
+the files. 
+
+Cloning the repository and softlinking makes it easy to update to the
+latest version, you would just a git pull once in a while.
+
+On Linux (and possible Mac) the softlinks can be create using the
+following commands:
+
+   [user@linux lisp]$ ln -s ~/Projects/elisp/da-kalender.el .
+   [user@linux lisp]$ ln -s ~/Projects/elisp/da-cal-tex.el .
+
+On Windows you could use the mklink command:
+
+   C:\Users\lunddsor\.emacs.d\lisp>mklink /H da-kalender.el c:\Projects\My\elisp\da-kalender.el
+   Hardlink created for da-kalender.el <<===>> c:\Projects\My\elisp\da-kalender.el
+
+   C:\Users\username\.emacs.d\lisp>mklink /H da-cal-tex.el c:\Projects\elisp\da-cal-tex.el
+   Hardlink created for da-cal-tex.el <<===>> c:\Projects\My\elisp\da-cal-tex.el
+
+
+The ~/.emacs.d/lisp/ directory should then be added to your load-path
+using the following or similar in ~/.emacs
+
+   (setq load-path
+     (append load-path (expand-file-name "~/.emacs.d/lisp/")))
+
+
+Then add the following to ~/.emacs
+
+   ;; Load danish localization of calendar
+   (load-file "da-kalender.el")
+
+   ;; Load danish localization of the TeX calendar
+   (load-file "da-cal-tex.el")
+
+   ;; Override keybinding to weekly iso calendar
+   (define-key calendar-mode-map (kbd "t w 3") 'da-cal-tex-cursor-week-iso)
