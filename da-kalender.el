@@ -106,6 +106,23 @@
            (car (cdr (cdr l)))))))
 
 
+;; Show week number
+;; Adapted from http://stackoverflow.com/questions/21364948/how-to-align-the-calendar-with-week-number-as-the-intermonth-text
+(setq calendar-intermonth-text
+      '(propertize
+        (format "%2d"
+                (car
+                 (calendar-iso-from-absolute
+                  (calendar-absolute-from-gregorian (list month day year)))))
+        'font-lock-face 'font-lock-doc-face))
+
+;; Week numbers are very common and there's no two-letter abreviation for it,
+;; Thus I'm not added a header. It could be added using this (ug=ugenummer):
+;;
+;; (setq calendar-intermonth-header nil)
+;;       (propertize "un" 'font-lock-face 'font-lock-keyword-face))
+
+
 ;; Calculation of easter, the fix point for many holidays (taken from
 ;; sv-kalender.el, originally from holiday-easter-etc)
 (defun da-easter (year)
