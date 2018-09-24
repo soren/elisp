@@ -1,9 +1,9 @@
 ;;; da-kalender.el --- Danish calendar for Emacs -*-coding:utf-8-*-
 
-;; Copyright (c) 2010 Søren Lund <soren@lund.org>
+;; Copyright (c) 2018 Søren Lund <soren@lund.org>
 
 ;; Author: Søren Lund <soren@lund.org>
-;; Version: 1.0
+;; Version: 1.2
 ;; Keywords: calendar danish localization
 
 ;; This file is not part of GNU Emacs.
@@ -37,7 +37,9 @@
 
 ;;; History
 
-;; 1.0 - Initial release
+;; 1.0 - Initial release (Mar 25th, 2010)
+;; 1.1 - Added week numbers (Feb 13th, 2014)
+;; 1.2 - Fixed to work with newer version of Emacs (Sep 24th, 2018)
 
 ;;; Code:
 
@@ -60,11 +62,17 @@
 ;; Weekday names
 (setq calendar-day-name-array
       ["søndag" "mandag" "tirsdag" "onsdag" "torsdag" "fredag" "lørdag"])
+(setq calendar-day-abbrev-array
+      ["søn" "man" "tirs" "ons" "tors" "fre" "lør"])
+(setq calendar-day-header-array
+      ["sø" "ma" "ti" "on" "to" "fr" "lø"])
 
 ;; Month names
 (setq calendar-month-name-array
       ["januar" "februar" "marts" "april" "maj" "juni"
        "juli" "august" "september" "oktober" "november" "december"])
+(setq calendar-month-abbrev-array
+      ["jan" "feb" "mar" "apr" "maj" "jun" "jul" "aug" "sep" "okt" "nov" "dec"])
 
 :; Equinoxes/solstices names
 ;; http://www.dmi.dk/dmi/nyd_aarets_laengste_dag_-_sommersolhverv
@@ -148,7 +156,7 @@
 	(holiday-fixed 1 6 "Hellige 3 konger")
 
 	;; Easter and Pentecost
-	(filter-visible-calendar-holidays
+	(holiday-filter-visible-calendar
 	 (mapcar
 	  (lambda (dag)
 	    (list (calendar-gregorian-from-absolute
